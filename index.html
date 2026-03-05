@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html class="scroll-smooth dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description"
+        content="Soham Mehra — Engineer working at the intersection of Autonomous Systems, Medical Imaging, and Scalable Software. CS student at University at Buffalo." />
+    <title>Soham Mehra | CS Portfolio</title>
+    <!-- Favicon: S. monogram -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia%2C serif' font-size='38' font-style='italic' fill='%23a855f7'%3ES.%3C/text%3E%3C/svg%3E" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#a855f7",
+                        "background-dark": "#0a0a0a",
+                        "deep-charcoal": "#121212",
+                    },
+                    fontFamily: {
+                        display: ["Instrument Serif", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+        } 100% {
+        transform: translateY(100%);
+        }
+    }
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+        } 50% {
+        opacity: 0;
+        }
+    }
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+        } 100% {
+        transform: translateX(-50%);
+        }
+    }
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+        } 50% {
+        transform: translateY(-15px);
+        }
+    }
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 100
+    }
+.crt-scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 101
+    }
+.terminal-glow {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), inset 0 0 10px rgba(168, 85, 247, 0.2)
+    }
+.grainy-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAvlki7733I-dgh0Pe8eHsYAuMoMQsDzf6v_oLxeCxuAw8kBo4wpP-_9kL0jpmpoCrJ8wLzhCEuWqztiiLsNuxjZRg1V08e_iw8f9CPUESakY2CFawp9sujvKmBV3TIzlDvYtCEwMxFTSPlVVVJXcmeP5EBCFAboxu4fUlscIfCGTt7s-ESyK0oK5fB6jlq73YKPY-Uyj4pRrxCw8oVEdr5UnfyCr6l0tVKN5AIkPEq8a89RU-Z6ZOjxlYj81bBdkHfeq-2z_OC-I0)
+    }
+.glass {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05)
+    }
+.animate-blink {
+    animation: blink 1s step-end infinite
+    }
+.animate-marquee {
+    animation: marquee 30s linear infinite
+    }
+.animate-float {
+    animation: float 6s ease-in-out infinite
+    }
+.node-glow {
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8)
+    }
+.terminal-container {
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out
+    }
+.terminal-hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none
+    }
+.main-content {
+    opacity: 0;
+    transition: opacity 1s ease-in
+    }
+.main-visible {
+    opacity: 1
+    }
+.sketch-underline {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' viewBox='0 0 100 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 8.5C12 7 35 5.5 98 2' stroke='%23a855f7' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100% 12px;
+    padding-bottom: 8px
+    }</style>
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-background-dark text-slate-800 dark:text-slate-300 font-sans grainy-bg overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+    <audio id="bgm"
+        src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1cb8.mp3?filename=ambient-piano-amp-strings-10711.mp3"
+        loop preload="auto"></audio>
+    <audio id="transition-sound"
+        src="https://cdn.pixabay.com/download/audio/2024/02/26/audio_a1682dc157.mp3?filename=sci-fi-computer-calculating-2-184033.mp3"
+        preload="auto"></audio>
+    <div class="crt-overlay hidden dark:block"></div>
+    <div class="crt-scanline hidden dark:block"></div>
+    <div class="fixed inset-0 z-[200] bg-background-dark flex items-center justify-center p-4" id="intro-screen">
+        <div class="absolute top-8 left-8 text-2xl font-display italic text-white tracking-tighter">S.</div>
+        <div class="absolute top-8 right-8">
+            <button class="p-2 rounded-full hover:bg-white/5 transition-colors text-slate-400">
+                <span class="material-symbols-outlined text-xl">dark_mode</span>
+            </button>
+        </div>
+        <div
+            class="w-full max-w-3xl terminal-container bg-black border border-primary/40 rounded-lg overflow-hidden terminal-glow p-1">
+            <div class="bg-zinc-900 px-4 py-2 border-b border-white/10 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500/50"></div>
+                </div>
+                <div class="mx-auto text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                    Soham_Terminal_v1.0.sh</div>
+            </div>
+            <div class="p-8 font-mono text-sm space-y-4">
+                <pre class="text-primary leading-tight text-xs md:text-sm">      _____       _                      
+     / ____|     | |                     
+    | (___   ___ | |__   __ _ _ __ ___  
+     \___ \ / _ \| '_ \ / _` | '_ ` _ \ 
+     ____) | (_) | | | | (_| | | | | | |
+    |_____/ \___/|_| |_|\__,_|_| |_| |_|
+                </pre>
+                <div class="space-y-1">
+                    <p class="text-emerald-500">[SYSTEM] Initializing Soham's Environment...</p>
+                    <p class="text-blue-400">[DEBUG] Loading Neural Networks...</p>
+                    <p class="text-primary">[INFO] Portfolio Ready.</p>
+                </div>
+                <div class="flex items-center gap-2 pt-4">
+                    <span class="text-slate-500">&gt;</span>
+                    <span class="text-white">type "ENTER" or click to start</span>
+                    <span class="w-2 h-5 bg-primary animate-blink"></span>
+                </div>
+                <div class="pt-8 flex justify-center">
+                    <button
+                        class="group relative px-12 py-4 bg-primary/10 border border-primary text-primary font-mono text-xs tracking-[0.3em] hover:bg-primary hover:text-white transition-all duration-500 shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]"
+                        id="init-btn">
+                        INITIALIZE_SYSTEM
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main-content" id="main-content">
+        <nav
+            class="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5 transition-colors duration-300">
+            <div
+                class="group relative cursor-pointer text-2xl font-display italic text-slate-900 dark:text-white tracking-tighter">
+                S.
+                <span
+                    class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-sm font-mono text-green-500 whitespace-nowrap hidden md:block pointer-events-none">&gt;
+                    "hello world"</span>
+            </div>
+            <div
+                class="hidden md:flex gap-10 text-[10px] font-bold text-slate-500 dark:text-slate-400 tracking-[0.2em] uppercase">
+                <a class="hover:text-primary transition-colors" href="#work">Projects</a>
+                <a class="hover:text-primary transition-colors" href="#journey">Experience</a>
+                <a class="hover:text-primary transition-colors" href="#contact">About & Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-500 dark:text-slate-400"
+                    id="theme-toggle">
+                    <span class="material-symbols-outlined text-xl">light_mode</span>
+                </button>
+                <a href="Resume.pdf" target="_blank" rel="noopener"
+                    class="px-5 py-2 rounded-full border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-[10px] uppercase font-bold tracking-widest hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all">
+                    Resume
+                </a>
+            </div>
+        </nav>
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 relative pt-20">
+            <div class="max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-12 z-10">
+                <div class="flex-1 text-left space-y-8">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] font-mono uppercase tracking-widest">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_#a855f7]"></span>
+                        📍 Buffalo, NY • Available for roles
+                    </div>
+                    <h1
+                        class="text-7xl md:text-[9rem] font-display leading-none text-slate-900 dark:text-white transition-colors duration-300">
+                        Hi, I'm <span class="italic sketch-underline">Soham</span> 👋
+                    </h1>
+                    <p
+                        class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-light max-w-2xl leading-relaxed transition-colors duration-300">
+                        Engineer working at the intersection of <span
+                            class="text-slate-900 dark:text-white font-medium">Autonomous Systems</span>,
+                        <span class="text-slate-900 dark:text-white font-medium">Medical Imaging</span>, and Scalable
+                        Software.
+                    </p>
+                    <div class="flex flex-wrap gap-6 pt-4">
+                        <a class="group relative px-8 py-4 bg-primary text-white rounded-full font-medium overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/30 flex items-center gap-3"
+                            href="#work">
+                            View Work <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+                        </a>
+                        <a class="px-8 py-4 bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-full font-medium hover:bg-slate-200 dark:hover:bg-white/10 transition-all border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white"
+                            href="Resume.pdf" target="_blank" rel="noopener">
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-64 h-64 md:w-96 md:h-96 relative group mt-10 md:mt-0">
+                    <div
+                        class="absolute inset-0 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-500">
+                    </div>
+                    <img src="avatar.png" alt="Soham Mehra Sketched Avatar"
+                        class="w-full h-full object-contain relative z-10 drop-shadow-xl hover:scale-105 transition-transform duration-500" />
+                </div>
+            </div>
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10 animate-float">
+            </div>
+        </section>
+        <section
+            class="py-24 border-y border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-deep-charcoal/50 overflow-hidden transition-colors duration-300"
+            id="arsenal">
+            <div class="max-w-7xl mx-auto px-6 mb-16 text-center">
+                <h2 class="text-5xl font-display mb-4 text-slate-900 dark:text-white transition-colors duration-300">
+                    Technical <span class="italic text-primary">Arsenal 🛠️</span></h2>
+                <p class="text-slate-500 font-mono text-xs uppercase tracking-widest">The tools and technologies I use
+                    to build scalable systems.</p>
+            </div>
+            <div class="relative flex overflow-hidden">
+                <div class="flex animate-marquee whitespace-nowrap items-center py-4">
+                    <!-- First set -->
+                    <div class="flex gap-16 items-center px-8">
+                        <!-- Python -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                                alt="Python"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Python</span>
+                        </div>
+                        <!-- C++ -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+                                alt="C++"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">C++</span>
+                        </div>
+                        <!-- Java -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                                alt="Java"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Java</span>
+                        </div>
+                        <!-- JS -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+                                alt="JavaScript"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">JavaScript</span>
+                        </div>
+                        <!-- React -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+                                alt="React"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">React</span>
+                        </div>
+                        <!-- Next.js -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+                                alt="Next.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Next.js</span>
+                        </div>
+                        <!-- Node.js -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+                                alt="Node.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Node.js</span>
+                        </div>
+                        <!-- Flask -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+                                alt="Flask"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Flask</span>
+                        </div>
+                        <!-- Docker -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+                                alt="Docker"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Docker</span>
+                        </div>
+                        <!-- AWS -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+                                alt="AWS"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">AWS</span>
+                        </div>
+                        <!-- MongoDB -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+                                alt="MongoDB"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">MongoDB</span>
+                        </div>
+                        <!-- Git -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+                                alt="Git"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Git</span>
+                        </div>
+                        <!-- Linux -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+                                alt="Linux"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Linux</span>
+                        </div>
+                        <!-- NumPy -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg"
+                                alt="NumPy"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">NumPy</span>
+                        </div>
+                        <!-- Pandas -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg"
+                                alt="Pandas"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Pandas</span>
+                        </div>
+                        <!-- HTML5 -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                                alt="HTML5"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">HTML5</span>
+                        </div>
+                        <!-- Tailwind -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+                                alt="Tailwind"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Tailwind</span>
+                        </div>
+                        <!-- SQL -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+                                alt="SQL"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">SQL</span>
+                        </div>
+                        <!-- Bash -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+                                alt="Bash"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Bash</span>
+                        </div>
+                        <!-- Express -->
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg"
+                                alt="Express.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Express</span>
+                        </div>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="flex gap-16 items-center px-8">
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                                alt="Python"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Python</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+                                alt="C++"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">C++</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                                alt="Java"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Java</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+                                alt="JavaScript"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">JavaScript</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+                                alt="React"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">React</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+                                alt="Next.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Next.js</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+                                alt="Node.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Node.js</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+                                alt="Flask"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Flask</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+                                alt="Docker"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Docker</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+                                alt="AWS"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">AWS</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+                                alt="MongoDB"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">MongoDB</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+                                alt="Git"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Git</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+                                alt="Linux"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Linux</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg"
+                                alt="NumPy"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">NumPy</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg"
+                                alt="Pandas"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Pandas</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                                alt="HTML5"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">HTML5</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+                                alt="Tailwind"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Tailwind</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+                                alt="SQL"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">SQL</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+                                alt="Bash"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Bash</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-all duration-300 group cursor-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg"
+                                alt="Express.js"
+                                class="h-10 w-10 grayscale group-hover:grayscale-0 group-hover:drop-shadow-[0_0_8px_#a855f7]"><span
+                                class="text-[9px] font-mono uppercase tracking-widest text-slate-600 dark:text-slate-400">Express</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-32 px-6 max-w-7xl mx-auto" id="work">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                <div>
+                    <h2 class="text-7xl md:text-9xl font-display text-slate-900 dark:text-white transition-colors">My
+                        Work <span class="italic text-primary">Speaks. 🧪</span></h2>
+                    <p class="text-slate-500 font-mono text-sm mt-4 uppercase tracking-[0.3em]">A selection of recent
+                        projects — autonomous systems, deep learning &amp; scalable pipelines.</p>
+                </div>
+                <a href="https://github.com" target="_blank"
+                    class="text-slate-500 font-mono text-xs max-w-[200px] uppercase hidden md:block leading-relaxed hover:text-primary transition-colors">View
+                    all on GitHub →</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Plant Disease Detection -->
+                <div
+                    class="group relative flex flex-col bg-white dark:bg-deep-charcoal rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 shadow-sm dark:shadow-none">
+                    <div
+                        class="aspect-video bg-gradient-to-br from-green-100 dark:from-green-900/20 to-slate-100 dark:to-slate-900/80 overflow-hidden relative flex items-center justify-center">
+                        <span class="text-6xl">🌱</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-white dark:from-deep-charcoal to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-widest">AI
+                                    // 001</span>
+                                <a href="#"
+                                    class="text-[9px] font-mono text-slate-400 hover:text-primary transition-colors uppercase tracking-widest">Source
+                                    ↗</a>
+                            </div>
+                            <h3 class="text-2xl font-display mb-3 text-slate-900 dark:text-white">Plant Disease
+                                Detection 🌱</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm font-light leading-relaxed">Built
+                                full-stack web app for plant disease detection. Trained CNN model achieving 92% accuracy
+                                across 15 crop species. Integrated model inference with live UI and pesticide
+                                recommendations.</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Python</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">CNN</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Flask</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">HTML/CSS</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Autonomous Lunar Rover -->
+                <div
+                    class="group relative flex flex-col bg-white dark:bg-deep-charcoal rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 shadow-sm dark:shadow-none">
+                    <div
+                        class="aspect-video bg-gradient-to-br from-yellow-100 dark:from-yellow-900/20 to-slate-100 dark:to-slate-900/80 overflow-hidden relative flex items-center justify-center">
+                        <span class="text-6xl">🌕</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-white dark:from-deep-charcoal to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-widest">Robotics
+                                    // 002</span>
+                                <a href="#"
+                                    class="text-[9px] font-mono text-slate-400 hover:text-primary transition-colors uppercase tracking-widest">Source
+                                    ↗</a>
+                            </div>
+                            <h3 class="text-2xl font-display mb-3 text-slate-900 dark:text-white">Autonomous Lunar Rover
+                                🌕</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm font-light leading-relaxed">
+                                Engineered onboard control systems and integrated sensor autonomy stacks for a NASA
+                                competition rover, improving navigation accuracy by 35%.</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">C++</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">ROS</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Embedded
+                                Systems</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- SPECT Pipeline -->
+                <div
+                    class="group relative flex flex-col bg-white dark:bg-deep-charcoal rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 shadow-sm dark:shadow-none">
+                    <div
+                        class="aspect-video bg-gradient-to-br from-purple-100 dark:from-purple-900/20 to-slate-100 dark:to-slate-900/80 overflow-hidden relative flex items-center justify-center">
+                        <span class="text-6xl">🩻</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-white dark:from-deep-charcoal to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-widest">Imaging
+                                    // 003</span>
+                                <a href="#"
+                                    class="text-[9px] font-mono text-slate-400 hover:text-primary transition-colors uppercase tracking-widest">Source
+                                    ↗</a>
+                            </div>
+                            <h3 class="text-2xl font-display mb-3 text-slate-900 dark:text-white">Self-Collimation SPECT
+                                Pipeline 🩻</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm font-light leading-relaxed">
+                                Developed simulation tools and voxel-level sensitivity modeling for medical imaging.
+                                Deployed iterative reconstruction workloads on high-performance computing clusters.</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Python</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">HPC</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Numerical
+                                Methods</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Flight Deal Finder -->
+                <div
+                    class="group relative flex flex-col bg-white dark:bg-deep-charcoal rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 shadow-sm dark:shadow-none">
+                    <div
+                        class="aspect-video bg-gradient-to-br from-blue-100 dark:from-amber-900/20 to-slate-100 dark:to-slate-900/80 overflow-hidden relative flex items-center justify-center">
+                        <span class="text-6xl">✈️</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-white dark:from-deep-charcoal to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-widest">Automation
+                                    // 004</span>
+                                <a href="#"
+                                    class="text-[9px] font-mono text-slate-400 hover:text-primary transition-colors uppercase tracking-widest">Source
+                                    ↗</a>
+                            </div>
+                            <h3 class="text-2xl font-display mb-3 text-slate-900 dark:text-white">Flight Deal Finder ✈️
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm font-light leading-relaxed">
+                                Automated flight price tracking using Tequila Kiwi, Sheety, and IFTTT APIs. Reduced
+                                manual price checking by 90%. Implemented scheduled polling and SMS/email alerts.</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Python</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">REST
+                                APIs</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Automation</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- LinkedIn Bot -->
+                <div
+                    class="group relative flex flex-col bg-white dark:bg-deep-charcoal rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 shadow-sm dark:shadow-none">
+                    <div
+                        class="aspect-video bg-gradient-to-br from-cyan-100 dark:from-cyan-900/20 to-slate-100 dark:to-slate-900/80 overflow-hidden relative flex items-center justify-center">
+                        <span class="text-6xl">🤖</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-white dark:from-deep-charcoal to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span
+                                    class="text-[10px] font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-widest">Bot
+                                    // 005</span>
+                                <a href="#"
+                                    class="text-[9px] font-mono text-slate-400 hover:text-primary transition-colors uppercase tracking-widest">Source
+                                    ↗</a>
+                            </div>
+                            <h3 class="text-2xl font-display mb-3 text-slate-900 dark:text-white">LinkedIn Job
+                                Application Bot 🤖</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm font-light leading-relaxed">Built
+                                automation tool processing 100+ job applications per hour. Parsed dynamic DOM elements
+                                with 95% accuracy. Reduced repetitive manual entry by 70%.</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Python</span>
+                            <span
+                                class="text-[9px] font-mono bg-slate-100 dark:bg-white/5 px-2 py-1 rounded text-slate-600 dark:text-slate-400">Selenium</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- More coming -->
+                <div
+                    class="group relative flex flex-col bg-slate-50 dark:bg-background-dark rounded-3xl overflow-hidden border border-dashed border-slate-300 dark:border-white/10 transition-all duration-500 items-center justify-center p-8 text-center min-h-[400px]">
+                    <span
+                        class="material-symbols-outlined text-4xl text-slate-400 dark:text-slate-700 mb-4 animate-pulse">add_circle</span>
+                    <h3 class="text-xl font-display text-slate-500 dark:text-slate-600">Next Big Idea</h3>
+                    <p class="text-slate-400 dark:text-slate-700 text-xs font-mono mt-2 uppercase tracking-widest">In
+                        Progress...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 bg-slate-100/50 dark:bg-deep-charcoal/30 relative transition-colors duration-300"
+            id="journey">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center mb-24">
+                    <h2 class="text-6xl font-display italic text-slate-900 dark:text-white mb-4 transition-colors">
+                        Professional <span class="text-primary">Journey 🚀</span></h2>
+                    <p class="text-slate-500 font-mono text-xs uppercase tracking-[0.4em]">My proven track record and
+                        field experience</p>
+                </div>
+                <div class="relative max-w-4xl mx-auto pl-8 md:pl-0">
+                    <div
+                        class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/50 via-primary to-primary/50 -translate-x-1/2">
+                    </div>
+                    <!-- Research -->
+                    <div class="relative mb-32 md:flex justify-between items-start w-full group">
+                        <div class="hidden md:block w-[42%] text-right pr-12 pt-1 transition-all group-hover:pr-14">
+                            <span class="text-primary font-mono text-xs mb-2 block uppercase tracking-widest">Dec 2025 —
+                                Present</span>
+                            <h4 class="text-3xl font-display text-slate-900 dark:text-white italic transition-colors">
+                                Student Assistant (Research)</h4>
+                            <p class="text-slate-500 font-medium text-sm">Dept. of Radiology, University at Buffalo</p>
+                        </div>
+                        <div
+                            class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-slate-50 dark:border-background-dark -translate-x-1/2 z-10 node-glow">
+                        </div>
+                        <div class="md:w-[42%] md:pl-12">
+                            <div class="md:hidden mb-4">
+                                <span class="text-primary font-mono text-xs mb-1 block uppercase tracking-widest">Dec
+                                    2025 — Present</span>
+                                <h4 class="text-2xl font-display text-slate-900 dark:text-white">Student Assistant
+                                    (Research)</h4>
+                            </div>
+                            <div
+                                class="bg-white dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/5 p-6 rounded-2xl group-hover:border-primary/30 transition-all">
+                                <ul
+                                    class="space-y-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-light list-none">
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Develop
+                                        Python-based software pipelines for Self-Collimation SPECT medical imaging
+                                        systems.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Implement
+                                        system matrix generation, voxel-level sensitivity modeling, and iterative image
+                                        reconstruction algorithms.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Deploy
+                                        reconstruction workflows on high-performance computing clusters.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Build
+                                        modular, scalable simulation tools for imaging system optimization.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Scientific
+                                        computing</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Medical
+                                        imaging</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">HPC</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Lunabotics -->
+                    <div class="relative mb-32 md:flex flex-row-reverse justify-between items-start w-full group">
+                        <div class="hidden md:block w-[42%] text-left pl-12 pt-1 transition-all group-hover:pl-14">
+                            <span class="text-primary font-mono text-xs mb-2 block uppercase tracking-widest">Aug 2025 —
+                                Present</span>
+                            <h4 class="text-3xl font-display text-slate-900 dark:text-white italic transition-colors">
+                                Software Engineer</h4>
+                            <p class="text-slate-500 font-medium text-sm">UB Lunabotics Team (NASA Challenge)</p>
+                        </div>
+                        <div
+                            class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-slate-50 dark:border-background-dark -translate-x-1/2 z-10 node-glow">
+                        </div>
+                        <div class="md:w-[42%] md:pr-12">
+                            <div class="md:hidden mb-4">
+                                <span class="text-primary font-mono text-xs mb-1 block uppercase tracking-widest">Aug
+                                    2025 — Present</span>
+                                <h4 class="text-2xl font-display text-slate-900 dark:text-white">Software Engineer</h4>
+                            </div>
+                            <div
+                                class="bg-white dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/5 p-6 rounded-2xl group-hover:border-primary/30 transition-all">
+                                <ul
+                                    class="space-y-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-light list-none">
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Engineered
+                                        embedded control systems for a NASA competition rover.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Integrated
+                                        sensors, actuators, and onboard autonomy stack.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Improved
+                                        rover navigation accuracy by 35%. Worked on autonomy, stability, and reliability
+                                        systems.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Collaborated
+                                        with 10+ cross-disciplinary engineers. Ensured NASA competition compliance.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Embedded
+                                        systems</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Robotics
+                                        control</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Autonomous
+                                        navigation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- IT Intern -->
+                    <div class="relative md:flex justify-between items-start w-full group">
+                        <div class="hidden md:block w-[42%] text-right pr-12 pt-1 transition-all group-hover:pr-14">
+                            <span class="text-primary font-mono text-xs mb-2 block uppercase tracking-widest">Jan 2022 —
+                                Mar 2022</span>
+                            <h4 class="text-3xl font-display text-slate-900 dark:text-white italic transition-colors">IT
+                                Intern</h4>
+                            <p class="text-slate-500 font-medium text-sm">Indian Oil Corporation Ltd. — India</p>
+                        </div>
+                        <div
+                            class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-slate-50 dark:border-background-dark -translate-x-1/2 z-10 node-glow">
+                        </div>
+                        <div class="md:w-[42%] md:pl-12">
+                            <div class="md:hidden mb-4">
+                                <span class="text-primary font-mono text-xs mb-1 block uppercase tracking-widest">Jan
+                                    2022 — Mar 2022</span>
+                                <h4 class="text-2xl font-display text-slate-900 dark:text-white">IT Intern</h4>
+                            </div>
+                            <div
+                                class="bg-white dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/5 p-6 rounded-2xl group-hover:border-primary/30 transition-all">
+                                <ul
+                                    class="space-y-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-light list-none">
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Diagnosed
+                                        and resolved 20+ weekly hardware/software/network issues. Improved workstation
+                                        uptime by 15%.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Assisted CTO
+                                        with server monitoring and IT audits. Helped maintain 99% system uptime.</li>
+                                    <li class="flex gap-3"><span class="text-primary mt-1 text-xs">◆</span> Contributed
+                                        to ISO IT compliance checks.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">IT
+                                        Support</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">Networking</span>
+                                    <span
+                                        class="text-[9px] font-mono bg-primary/10 text-primary px-2 py-1 rounded">System
+                                        Monitoring</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="pt-40 pb-16 px-6 border-t border-white/5 overflow-hidden" id="contact">
+            <div class="max-w-7xl mx-auto flex flex-col items-center">
+                <h2
+                    class="text-7xl md:text-[12rem] font-display text-center mb-16 text-slate-900 dark:text-white leading-none transition-colors duration-300">
+                    Let's <span class="italic text-primary">collaborate.</span>
+                </h2>
+                <div
+                    class="flex flex-wrap justify-center gap-16 mb-24 text-slate-500 font-mono text-xs uppercase tracking-[0.3em]">
+                    <a class="hover:text-primary transition-colors hover:-translate-y-1 inline-block duration-300"
+                        href="https://www.linkedin.com/in/soham-mehra-406a62227/" target="_blank"
+                        rel="noopener">LinkedIn</a>
+                    <a class="hover:text-primary transition-colors hover:-translate-y-1 inline-block duration-300"
+                        href="https://github.com/soham1010" target="_blank" rel="noopener">GitHub</a>
+                    <a class="hover:text-primary transition-colors hover:-translate-y-1 inline-block duration-300"
+                        href="mailto:mehrasoham51@gmail.com">Email</a>
+                </div>
+                <div
+                    class="w-full flex flex-col md:flex-row justify-between items-center gap-10 pt-16 border-t border-white/5">
+                    <div class="flex items-center gap-3 text-slate-500 text-[10px] font-mono uppercase tracking-widest">
+                        <span class="material-symbols-outlined text-sm text-primary">location_on</span>
+                        Buffalo, NY
+                    </div>
+                    <div class="group relative cursor-help">
+                        <span
+                            class="material-symbols-outlined text-slate-800 hover:text-primary transition-colors text-3xl">smart_toy</span>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-6 w-80 glass rounded-2xl p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-2xl scale-95 group-hover:scale-100">
+                            <pre class="text-[8px] font-mono leading-[1.1] text-primary mb-4">   ____  ____  __ __  ____  ___ ___
+  / ___|/    ||  |  ||    ||   |   |
+ (   \_|  o  ||  |  | |  | | _   _ |
+  \__  |     ||  _  | |  | |  \_/  |
+  /  \ |  _  ||  |  | |  | |   |   |
+  \    |  |  ||  |  | |  | |   |   |
+   \___|__|__||__|__||____||___|___|
+                    </pre>
+                            <div class="h-1 bg-white/5 w-full rounded-full overflow-hidden">
+                                <div class="h-full bg-primary w-2/3 animate-[scroll_4s_ease-in-out_infinite_alternate]">
+                                </div>
+                            </div>
+                            <p class="text-[9px] text-slate-400 mt-3 font-mono text-center uppercase tracking-widest">
+                                Core Systems: Online</p>
+                        </div>
+                    </div>
+                    <div class="text-slate-600 text-[10px] font-mono uppercase tracking-widest italic">
+                        Built with curiosity. © 2026
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        // Intro Screen Interaction
+        const introScreen = document.getElementById('intro-screen');
+        const mainContent = document.getElementById('main-content');
+        const initBtn = document.getElementById('init-btn');
+        const enterSystem = () => {
+            const transitionSound = document.getElementById('transition-sound');
+            const bgm = document.getElementById('bgm');
+            if (transitionSound) {
+                transitionSound.volume = 0.5;
+                transitionSound.play().catch(e => console.log('Audio play failed:', e));
+            }
+            if (bgm) {
+                bgm.volume = 0.2;
+                setTimeout(() => bgm.play().catch(e => console.log('BGM play failed:', e)), 500);
+            }
+            introScreen.classList.add('terminal-hidden');
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                mainContent.classList.add('main-visible');
+            }, 800);
+        };
+        initBtn.addEventListener('click', enterSystem);
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && introScreen.style.display !== 'none') enterSystem();
+        });
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon1 = document.querySelector('#intro-screen .material-symbols-outlined');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const icon = themeToggle.querySelector('.material-symbols-outlined');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.textContent = 'dark_mode';
+                if (themeIcon1) themeIcon1.textContent = 'dark_mode';
+            } else {
+                html.classList.add('dark');
+                icon.textContent = 'light_mode';
+                if (themeIcon1) themeIcon1.textContent = 'light_mode';
+            }
+        });
+        document.querySelector('#intro-screen button').addEventListener('click', () => {
+            themeToggle.click();
+        });
+        // Simple mouse move parallax for hero
+        window.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.animate-float');
+            if (glow) {
+                const x = (e.clientX - window.innerWidth / 2) * 0.02;
+                const y = (e.clientY - window.innerHeight / 2) * 0.02;
+                glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
